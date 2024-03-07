@@ -3,7 +3,7 @@ import boto3
 import pandas as pd
 import streamlit as st
 import tempfile
-from st_files_connection import FilesConnection
+from st-files-connection import FilesConnection
 from datetime import datetime
 import matplotlib.pyplot as plt
 
