@@ -10,7 +10,7 @@ import matplotlib.pyplot as plt
 # Main Streamlit app
 def main():
 
-    st.header('MSF Usage Metrics')
+    st.header('SRC Usage Metrics')
 
     conn = st.connection('s3', type=FilesConnection)
     
