@@ -7,7 +7,7 @@ from st_files_connection import FilesConnection
 from datetime import datetime
 import matplotlib.pyplot as plt
 
-import streamlit_authenticator as stauth
+# import streamlit_authenticator as stauth
 
 # from exec_summary import exec_summary as execsum
 
