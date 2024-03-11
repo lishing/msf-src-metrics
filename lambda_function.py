@@ -65,19 +65,23 @@ def json_to_csv(json_files, csv_file):
                     data = json.load(f)
                     if isinstance(data, dict):
                         record = flatten_json(data)
-
-                        selected_keys = list(record.keys())[:4]
-
-                        if not header_written:
-                            csv_writer.writerow(['Date'] + selected_keys) # Header
-                            header_written = True
                         file_date = extract_date(json_file)
+                        date_cutoff = datetime.strptime('2023-01-04', '%Y-%m-%d')
                         if file_date:
-                            selected_values = [record[key] for key in selected_keys]
-                            csv_writer.writerow([file_date] + selected_values) # values
+                            file_datetime = datetime.strptime(file_date, '%Y-%m-%d')
+                            # Determine the key based on the date
+                            key = 'output_raw' if file_datetime >= date_cutoff else 'output_note'
+                            # Use a generic column name, such as 'output'
+                            output_value = record.get(key, 'N/A')
+                            common_keys = ['version', 'assessment_type', 'input_note']
+                            selected_values = [record.get(k, 'N/A') for k in common_keys]
+                            if not header_written:
+                                csv_writer.writerow(['Date'] + common_keys + ['output'])
+                                header_written = True
+                            csv_writer.writerow([file_date] + selected_values + [output_value])
                 except json.JSONDecodeError as e:
                     print(f"Error parsing JSON file '{json_file}': {e}")
-                    # Handle the error as needed, e.g., skip the file or log the error
+
 
     print(f"CSV file '{csv_file}' created successfully.")
 
