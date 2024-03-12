@@ -7,12 +7,16 @@ from st_files_connection import FilesConnection
 from datetime import datetime
 import matplotlib.pyplot as plt
 
-# import streamlit_authenticator as stauth
+# import authenticate_user as auth
 
 # from exec_summary import exec_summary as execsum
 
 # Main Streamlit app
 def main():
+
+    # if not authenticate_user():
+    #     st.error("Authentication failed. Please check your credentials.")
+    #     return
 
     st.header('MSF Social Report Companion Usage Metrics')
 
@@ -94,13 +98,13 @@ def main():
                     return sum(character_count)
 
                 # Calculate costs by input notes
-                df['input_word_characters'] = df['input_note'].apply(count_characters)
-                total_input_characters = df['input_word_characters'].sum()
+                df_selected['input_word_characters'] = df_selected['input_note'].apply(count_characters)
+                total_input_characters = df_selected['input_word_characters'].sum()
                 total_input_tokens = total_input_characters / 4 # 4 characters = 1 token
                 input_cost = total_input_tokens / 1000 * 0.01 # input cost for gpt-4-turbo is 0.01 for every 1000 tokens
 
                 # have a df data which contains failed output to calculate costs better
-                df_successful_output = df[df["output_note"].str.contains("Exception Raised when generating output.") == False]
+                df_successful_output = df_selected[df_selected["output_note"].str.contains("Exception Raised when generating output.") == False]
 
                 # Calculate costs by output notes
                 df_successful_output['output_word_characters'] = df_successful_output['output_note'].apply(count_characters)
