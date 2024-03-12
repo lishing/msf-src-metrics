@@ -14,7 +14,7 @@ import matplotlib.pyplot as plt
 # Main Streamlit app
 def main():
 
-    st.header('SRC Usage Metrics')
+    st.header('MSF Social Report Companion Usage Metrics')
 
     # to add a prompt for executive summary according to the last month's data. 
     # st.text('Executive summary')
@@ -87,24 +87,25 @@ def main():
                     percentage_delta = 0
 
                 # metric 4: change to cost (based on tokens used). find average length of input and output
-                # Count number of words into text
-                def count_words(text):
+                # Count number of characters from each words 
+                def count_characters(text):
                     words = text.split()  
-                    return len(words) 
+                    character_count = [len(word) for word in words]
+                    return sum(character_count)
 
                 # Calculate costs by input notes
-                df['input_word_count'] = df['input_note'].fillna('').astype(str).apply(count_words)
-                total_input_words = df['input_word_count'].sum()
-                total_input_tokens = total_input_words / 4
+                df['input_word_characters'] = df['input_note'].apply(count_characters)
+                total_input_characters = df['input_word_characters'].sum()
+                total_input_tokens = total_input_characters / 4 # 4 characters = 1 token
                 input_cost = total_input_tokens / 1000 * 0.01 # input cost for gpt-4-turbo is 0.01 for every 1000 tokens
 
                 # have a df data which contains failed output to calculate costs better
                 df_successful_output = df[df["output_note"].str.contains("Exception Raised when generating output.") == False]
 
                 # Calculate costs by output notes
-                df_successful_output['output_word_count'] = df_successful_output['output_note'].fillna('').astype(str).apply(count_words)
-                total_output_words = df_successful_output['output_word_count'].sum()
-                total_output_tokens = total_output_words / 4
+                df_successful_output['output_word_characters'] = df_successful_output['output_note'].apply(count_characters)
+                total_output_characters = df_successful_output['output_word_characters'].sum()
+                total_output_tokens = total_output_characters / 4
                 output_cost = total_output_tokens / 1000 * 0.03 # output cost for gpt-4-turbo is 0.03 for every 1000 tokens
                 
                 total_cost = round(input_cost + output_cost)
@@ -115,7 +116,7 @@ def main():
                 col1.metric(label = 'Total Usage', value=total, help = 'Data includes inputs submitted. Figures will be refreshed weekly.')
                 col3.metric(label = 'Total time saved', value=time_saved, help='Each usage is estimated to be able to save 12.5 minutes per SA report. Based on users\' study done in Nov 2023.')
                 col2.metric(label = 'Usage this month', value=usage_count_this_month, delta=delta, help='Delta is calculated based on MoM growth of the month today, not affected by time range.')
-                col4.metric(label = 'Total cost', value=f'${total_cost}', help='Based on the costs of GPT-4 for input and output, rounded to the nearest dollar.')
+                col4.metric(label = 'Estimated total cost', value=f'${total_cost}', help='Based on the costs of GPT-4 for input and output, rounded to the nearest dollar.')
 
                 # Aggregate usage by month
                 df_selected['year_month'] = df_selected['Date'].dt.to_period('M')
