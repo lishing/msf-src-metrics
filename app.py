@@ -7,17 +7,20 @@ from st_files_connection import FilesConnection
 from datetime import datetime
 import matplotlib.pyplot as plt
 
-# import authenticate_user as auth
-
-# from exec_summary import exec_summary as execsum
-
-# Main Streamlit app
 def main():
+    st.sidebar.title("Login")
 
-    # if not authenticate_user():
-    #     st.error("Authentication failed. Please check your credentials.")
-    #     return
+    password = st.sidebar.text_input("Enter Password", type="password")
+    
+    if password == st.secrets['APP_PASSWORD']: 
+        st.sidebar.success("Login Successful!")
 
+        display_content()
+
+    elif password != "":
+        st.sidebar.error("Incorrect Password")
+
+def display_content():
     st.header('MSF Social Report Companion Usage Metrics')
 
     # to add a prompt for executive summary according to the last month's data. 
@@ -156,4 +159,3 @@ def main():
 
 if __name__ == "__main__":
     main()
-
