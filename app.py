@@ -11,6 +11,8 @@ def main():
     st.sidebar.title("Login")
 
     password = st.sidebar.text_input("Enter Password", type="password")
+
+    # allow users to chat with data on the side bar
     
     if password == st.secrets['APP_PASSWORD']: 
         st.sidebar.success("Login Successful!")
@@ -120,7 +122,7 @@ def display_content():
                 # metrics column
                 col1, col2, col3, col4 = st.columns(4)
 
-                col1.metric(label = 'Total Usage', value=total, help = 'Data includes inputs submitted. Figures will be refreshed weekly.')
+                col1.metric(label = 'Total Usage', value=total, help = 'Data includes inputs submitted. Figures will be refreshed daily at 1am SGT.')
                 col3.metric(label = 'Total time saved', value=time_saved, help='Each usage is estimated to be able to save 12.5 minutes per SA report. Based on users\' study done in Nov 2023.')
                 col2.metric(label = 'Usage this month', value=usage_count_this_month, delta=delta, help='Delta is calculated based on MoM growth of the month today, not affected by time range.')
                 col4.metric(label = 'Estimated total cost', value=f'${total_cost}', help='Based on the costs of GPT-4 for input and output, rounded to the nearest dollar.')
