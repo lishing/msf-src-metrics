@@ -124,7 +124,7 @@ def display_content():
 
                 col1.metric(label = 'Total Usage', value=total, help = 'Data includes inputs submitted. Figures will be refreshed daily at 1am SGT.')
                 col3.metric(label = 'Total time saved', value=time_saved, help='Each usage is estimated to be able to save 12.5 minutes per SA report. Based on users\' study done in Nov 2023.')
-                col2.metric(label = 'Usage this month', value=usage_count_this_month, delta=delta, help='Delta is calculated based on MoM growth of the month today, not affected by time range.')
+                col2.metric(label = 'Usage this month', value=usage_count_this_month, help='Number of reports generated, month-to-date')
                 col4.metric(label = 'Estimated total cost', value=f'${total_cost}', help='Based on the costs of GPT-4 for input and output, rounded to the nearest dollar.')
 
                 # Aggregate usage by month

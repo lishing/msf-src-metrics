@@ -1,0 +1,23 @@
+credentials:
+  usernames:
+    cls:
+      email: chan_li_shing@tech.gov.sg
+      name: Chan Li Shing
+      password: msf1234 # To be replaced with hashed password
+    msfadmin:
+      email: joy_yj_tan@tech.gov.sg
+      name: Joy Tan
+      password: msf1234 # To be replaced with hashed password
+    nicktan:
+      email: nick_tan@tech.gov.sg
+      name: Nick Tan
+      password: msf1234 # To be replaced with hashed password
+cookie:
+  expiry_days: 1 # specify it to 1 day
+  key: random_signature_key # Must be string
+  name: random_cookie_name
+preauthorized:
+  emails:
+  - chan_li_shing@tech.gov.sg
+  - joy_yj_tan@tech.gov.sg
+  - nick_tan@tech.gov.sg
